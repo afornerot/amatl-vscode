@@ -1,0 +1,75 @@
+{
+  "name": "amatl-vscode",
+  "displayName": "amatl-vscode",
+  "description": "Extension VSCode pour générer HTML et PDF à partir de Markdown",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Amatl Extension Settings",
+      "properties": {
+        "amatl.generateHtmlOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Activer la génération HTML lors de la sauvegarde d'un fichier Markdown."
+        },
+        "amatl.generatePdfOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Activer la génération PDF lors de la sauvegarde d'un fichier Markdown."
+        },
+        "amatl.configDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Chemin d'un répertoire de configuration d'Amatl. Si vide, la configuration par défaut est utilisée."
+        }
+      }
+    }    
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.98.0",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.23.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "axios": "^1.8.4"
+  },
+  "files": [
+    "out/**/*",
+    "src/**/*",
+    "template/**/*",
+    "bin/**/*"
+  ]
+}

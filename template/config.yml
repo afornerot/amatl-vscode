@@ -1,0 +1,4 @@
+html-layout: ./template.gohtml
+pdf-scale: 0.7
+pdf-margin-left: 1.0
+pdf-margin-right: 1.0
