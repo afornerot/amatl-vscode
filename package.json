@@ -1,8 +1,10 @@
 {
   "name": "amatl-vscode",
   "displayName": "amatl-vscode",
-  "description": "Extension VSCode pour générer HTML et PDF à partir de Markdown",
+  "description": "Convert your Markdown files into HTML and PDF with Amatl !",
   "version": "0.0.1",
+  "publisher": "ArnaudFornerot",
+  "icon": "template/logo.png",
   "engines": {
     "vscode": "^1.98.0"
   },
@@ -21,17 +23,17 @@
         "amatl.generateHtmlOnSave": {
           "type": "boolean",
           "default": false,
-          "description": "Activer la génération HTML lors de la sauvegarde d'un fichier Markdown."
+          "description": "Enable HTML generation when saving a Markdown file."
         },
         "amatl.generatePdfOnSave": {
           "type": "boolean",
           "default": true,
-          "description": "Activer la génération PDF lors de la sauvegarde d'un fichier Markdown."
+          "description": "Enable PDF generation when saving a Markdown file."
         },
         "amatl.configDirectory": {
           "type": "string",
           "default": "",
-          "description": "Chemin d'un répertoire de configuration d'Amatl. Si vide, la configuration par défaut est utilisée."
+          "description": "Path to an Amatl configuration directory. If empty, the default configuration is used."
         }
       }
     }    

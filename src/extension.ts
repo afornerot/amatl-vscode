@@ -10,6 +10,7 @@ import { spawn } from "child_process";
 // 📌 Détecte l'OS et sélectionne le bon binaire
 const platform = os.platform();
 let AMATL_BINARY = "";
+let CHROMIUM_PATH = "";
 
 if (platform === "win32") {
     AMATL_BINARY = path.join(__dirname, "..", "bin", "amatl", "win", "amatl.exe");
@@ -121,12 +122,13 @@ function renderAmatl(filePath: string , type: string) {
     
 
     //vscode.window.showInformationMessage("🔄 Début génération "+outputFilePath+" ...");
-    //console.log(`${AMATL_BINARY} render --config "${configFile}" ${type} -o "${filePath.replace('.md', '.'+type)}" "${filePath}"`);
-
-    const command = `${AMATL_BINARY} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --debug true`;
+    const command = `${AMATL_BINARY} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --pdf-exec-path ${CHROMIUM_PATH}`;
+    console.log(command);
     exec(command, { timeout: 6000 }, (error, stdout, stderr) => {
         if (error) {
             vscode.window.showErrorMessage(`❌ Erreur Amatl ${type}: ${error}`);
+            console.log(`stderr = ${stderr}`);
+            console.log(`stout = ${stdout}`);
             return;
         }
 
@@ -150,6 +152,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (error) {
             vscode.window.showErrorMessage("❌ Chromium non trouvé ! Vérifiez son installation.");
         } else {
+            CHROMIUM_PATH=stdout.trim();
             vscode.window.showInformationMessage(`✅ Chromium trouvé : ${stdout.trim()}`);
         }
     });

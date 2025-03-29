@@ -1,5 +1,3 @@
-![logo](logo.svg)
-
 <div class="title">
 {{ .Meta.title }}
 </div>
