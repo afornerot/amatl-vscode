@@ -66,10 +66,9 @@
   "dependencies": {
     "axios": "^1.8.4"
   },
-  "files": [
-    "out/**/*",
-    "src/**/*",
-    "template/**/*",
-    "bin/**/*"
-  ]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/afornerot/amatl-vscode.git"
+  },
+  "license": "MIT"
 }
