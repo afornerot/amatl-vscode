@@ -6,6 +6,18 @@
       "description": "Generate a table of contents for the document. You can specify min/max heading levels."
     },
     {
+      "name": "Variables Declaration",
+      "code": "---\ntitle: <title>\nsubtitle: \ndateupdate: \nversion: \nauthor: \n---",
+      "replacePattern": "<title>",
+      "description": "Variables Declaration"
+    },    
+    {
+      "name": "Insert Variable",
+      "code": "{{ .Meta.var }}",
+      "replacePattern": "var",
+      "description": "Insert Variable"
+    },    
+    {
       "name": "Include File",
       "code": ":include{url=\"<url>\", fromHeadings=\"<headingLevel>\", shiftHeadings=\"<levelShift>\"}",
       "replacePattern": "<url>",
