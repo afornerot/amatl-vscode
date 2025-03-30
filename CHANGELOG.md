@@ -2,6 +2,10 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
+## 0.15.12
+
+- Add autocompletion route file where you type ./ or ../
+
 ## 0.15.11
 
 - Add htmlDirectory

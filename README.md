@@ -46,8 +46,11 @@ See [`doc`](https://github.com/Bornholm/amatl/tree/master/doc/README.md) for mor
 
 ## 📦 Installation  
 1. Download and install the extension from **VS Code Marketplace**.  
-2. Configure your amatl.configDirectory if you wants.  
+2. Configure your amatl.configDirectory if you wants witch your own template and style
 3. Open a Markdown file and save it to generate HTML/PDF.  
+4. Use Amatl Sidebar for insert directives
+5. Add your own directives
+6. tape ./ or ../ to autocomple a route file
 
 ## ⚙️ Configuration  
 

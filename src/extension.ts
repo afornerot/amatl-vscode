@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as os from 'os';
 import { exec } from 'child_process';
 import { DirectivesProvider } from "./directivesProvider";
+import { FileCompletionProvider } from "./filePathCompletionProvider";
 
 // 📌 Détecte l'OS et sélectionne le bon binaire
 const platform = os.platform();
@@ -214,6 +215,26 @@ export function activate(context: vscode.ExtensionContext) {
             }
         })
     );
+
+    context.subscriptions.push(
+        vscode.languages.registerCompletionItemProvider(
+            { scheme: "file", language: "markdown" },
+            new FileCompletionProvider(),
+            ".", "/" // Déclenche la complétion sur `.` et `/`
+        )
+    );
+
+    // Commande pour rafraîchir la complétion après sélection d'un dossier
+    context.subscriptions.push(
+        vscode.commands.registerCommand("extension.refreshCompletion", async (newPath: string) => {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                return;
+            };
+
+            await vscode.commands.executeCommand("editor.action.triggerSuggest");
+        })
+    );    
 }
 
 export function deactivate() {}
