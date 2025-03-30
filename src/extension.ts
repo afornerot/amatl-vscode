@@ -168,12 +168,11 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(disposable);
 
-    /*
     // Création d'un menu amatl-helper
     const directivesProvider = new DirectivesProvider(getConfigSettings());
     vscode.window.registerTreeDataProvider("amatlDirectives", directivesProvider);
 
-    
+    // Commande insertion de directives    
     context.subscriptions.push(
         vscode.commands.registerCommand("extension.insertDirective", (directive,replacePattern) => {
             const editor = vscode.window.activeTextEditor;
@@ -204,7 +203,6 @@ export function activate(context: vscode.ExtensionContext) {
             }
         })
     );
-    */
 }
 
 export function deactivate() {}
