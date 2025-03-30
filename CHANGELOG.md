@@ -2,7 +2,7 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
-## 0.15.10
+## 0.15.11
 
 - Add htmlDirectory
 - Add pdfDirectory
