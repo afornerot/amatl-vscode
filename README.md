@@ -98,12 +98,26 @@ body {
 }
 ```
 
-**noreplace**
+**noreplace.txt**
 Exclude file md to transform to html/pdf
 ```
 readme.md
 mydir/other.md
 ```
+
+**directives.json**
+You can add directive to Amatl sidebar
+```
+[
+    {
+      "name": "Break Page",
+      "code": "<div class='break-page'></div>",
+      "replacePattern": "",
+      "description": "Break Page"
+    }
+  ]
+```
+
 
 ## 📜 License  
 [MIT](./LICENSE)

@@ -168,22 +168,43 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(disposable);
 
+    /*
     // Création d'un menu amatl-helper
-    const directivesProvider = new DirectivesProvider();
+    const directivesProvider = new DirectivesProvider(getConfigSettings());
     vscode.window.registerTreeDataProvider("amatlDirectives", directivesProvider);
 
+    
     context.subscriptions.push(
-        vscode.commands.registerCommand("extension.insertDirective", (directive) => {
-            console.log("here");
+        vscode.commands.registerCommand("extension.insertDirective", (directive,replacePattern) => {
             const editor = vscode.window.activeTextEditor;
-            console.log(directive);
             if (editor) {
+
+                const selection = editor.selection;
+                const selectedText = editor.document.getText(selection);
+            
+                let finalSyntax = directive;
+            
+                // Remplace un placeholder replacePattern si présent dans la directive
+                if (selectedText && replacePattern) {
+                    finalSyntax = directive.replace(replacePattern, selectedText);
+                }
+
                 editor.edit((editBuilder) => {
-                    editBuilder.insert(editor.selection.active, directive);
+                    if (selection.isEmpty) {
+                        // Aucun texte sélectionné → insère simplement la directive au curseur
+                        editBuilder.insert(selection.start, finalSyntax);
+                    } else {
+                        // Remplace la sélection par la directive formatée
+                        editBuilder.replace(selection, finalSyntax);
+                    }
                 });
+
+                // Remet le focus sur l'éditeur après l'insertion
+                vscode.window.activeTextEditor?.show();
             }
         })
     );
+    */
 }
 
 export function deactivate() {}

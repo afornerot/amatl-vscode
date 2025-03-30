@@ -2,27 +2,114 @@
     {
       "name": "Table of Contents",
       "code": ":toc{minLevel=\"<minLevel>\", maxLevel=\"<maxLevel>\"}",
+      "replacePattern": "",
       "description": "Generate a table of contents for the document. You can specify min/max heading levels."
     },
     {
       "name": "Include File",
       "code": ":include{url=\"<url>\", fromHeadings=\"<headingLevel>\", shiftHeadings=\"<levelShift>\"}",
+      "replacePattern": "<url>",
       "description": "Include another file into the document."
-    },
-    {
-      "name": "Code Block",
-      "code": "```\n\n```",
-      "description": "Insert a formatted code block with syntax highlighting."
     },
     {
       "name": "Image",
       "code": "![Alt text](<imagePath>)",
+      "replacePattern": "<imagePath>",
       "description": "Insert an image with an optional description."
+    },
+    {
+      "name": "Code Block",
+      "code": "```\n<code>\n```",
+      "replacePattern": "<code>",
+      "description": "Insert a formatted code block with syntax highlighting."
+    },
+    {
+      "name": "Inline Code",
+      "code": "`<code>`",
+      "replacePattern": "<code>",
+      "description": "Formats text as inline code.",
+      "parameters": []
+    },
+    {
+      "name": "Link",
+      "code": "[Link text](<url> \"Optional title\")",
+      "description": "Creates a hyperlink.",
+      "replacePattern": "<url>",
+      "parameters": [
+        {
+          "name": "Link text",
+          "type": "string",
+          "optional": false,
+          "description": "Text to display as the link."
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "description": "Destination URL."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "description": "Optional tooltip text."
+        }
+      ]
+    },
+    {
+      "name": "Blockquote",
+      "code": "> This is a blockquote.",
+      "replacePattern": "This is a blockquote.",
+      "description": "Formats text as a blockquote.",
+      "parameters": []
+    },
+    {
+      "name": "Unordered List",
+      "code": "- Item 1\n- Item 2\n- Item 3",
+      "replacePattern": "Item 1",
+      "description": "Creates an unordered list.",
+      "parameters": []
+    },
+    {
+      "name": "Ordered List",
+      "code": "1. Item 1\n2. Item 2\n3. Item 3",
+      "replacePattern": "Item 1",
+      "description": "Creates an ordered list.",
+      "parameters": []
+    },
+    {
+      "name": "Horizontal Rule",
+      "code": "---",
+      "replacePattern": "",
+      "description": "Inserts a horizontal rule.",
+      "parameters": []
+    },
+    {
+      "name": "Footnote",
+      "code": "Here is a sentence with a footnote.[^1]\n\n[^1]: This is the footnote text.",
+      "replacePattern": "Here is a sentence with a footnote.",
+      "description": "Creates a footnote.",
+      "parameters": []
     },
     {
       "name": "Table",
       "code": "| Header 1 | Header 2 |\n|----------|----------|\n| Data 1   | Data 2   |",
+      "replacePattern": "",
       "description": "Insert a basic Markdown table."
+    },
+    {
+      "name": "Mermaid Diagram",
+      "code": "```mermaid\n<diagram-code>\n```",
+      "replacePattern": "<diagram-code>",
+      "description": "Renders a diagram using Mermaid.js.",
+      "parameters": []
+    },
+    {
+      "name": "MathJax Formula",
+      "code": "$$ <math-expression> $$",
+      "replacePattern": "<math-expression>",
+      "description": "Displays a mathematical formula using MathJax.",
+      "parameters": []
     }
   ]
   
