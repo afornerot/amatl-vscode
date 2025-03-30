@@ -21,11 +21,13 @@ if (platform === "win32") {
 process.env["PUPPETEER_EXECUTABLE_PATH"] = "/snap/bin/chromium";
 
 // Récupérer les settings de l'extension
-function getConfigSettings(): { generateHtmlOnSave: boolean, generatePdfOnSave: boolean, configDirectory: string } {
+function getConfigSettings(): { generateHtmlOnSave: boolean, htmlDirectory: string, generatePdfOnSave: boolean, pdfDirectory: string, configDirectory: string } {
     const config = vscode.workspace.getConfiguration('amatl');
     return {
         generateHtmlOnSave: config.get<boolean>('generateHtmlOnSave', true),
+        htmlDirectory: config.get<string>('htmlDirectory', ''),
         generatePdfOnSave: config.get<boolean>('generatePdfOnSave', false),
+        pdfDirectory: config.get<string>('pdfDirectory', ''),
         configDirectory: config.get<string>('configDirectory', '')
     };
 }
@@ -42,10 +44,9 @@ function getConfigFile(configDirectory: string): string {
     if (configDirectory) {
         // Utilisation de workspaceFolders pour obtenir le répertoire de travail
         const workDir = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
-        console.log(`workDir = ${workDir}`);
+
         // On contruit le path vers le fichier config.yml du workspace
         const potentialConfigFile = path.join(workDir, configDirectory, 'config.yml');
-        console.log(`potentielConfigFile = ${potentialConfigFile}`);
         if (fs.existsSync(potentialConfigFile)) {
             configFile = potentialConfigFile;
         }
@@ -69,10 +70,9 @@ function getNoReplace(configDirectory: string): string | null {
     if (configDirectory) {
         // Utilisation de workspaceFolders pour obtenir le répertoire de travail
         const workDir = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
-        console.log(`workDir = ${workDir}`);
+
         // On contruit le path vers le fichier config.yml du workspace
         const potentialNoReplaceFile = path.join(workDir, configDirectory, 'noreplace.txt');
-        console.log(`potentialNoReplaceFile = ${potentialNoReplaceFile}`);
         if (fs.existsSync(potentialNoReplaceFile)) {
             noReplaceFile = potentialNoReplaceFile;
         }
@@ -107,8 +107,8 @@ function renderAmatl(filePath: string , type: string) {
 
     // Ne pas traiter les fichiers présent dans noReplaceFile
     let noReplaceFile = getNoReplace(settings.configDirectory);
+    let workDir = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
     if(noReplaceFile) {
-        let workDir = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
         let basePath=filePath.replace(workDir+"/","");
         if(isFileInNoreplaceList(basePath,noReplaceFile)) {
             return;
@@ -117,7 +117,18 @@ function renderAmatl(filePath: string , type: string) {
 
     let outputFilePath=filePath.replace('.md', '.'+type);
     let configFile=getConfigFile(settings.configDirectory);
-    
+
+    if(type==="html"&&settings.htmlDirectory) {
+        outputFilePath=outputFilePath.replace(workDir,workDir+"/"+settings.htmlDirectory);
+    }
+    if(type==="pdf"&&settings.pdfDirectory) {
+        outputFilePath=outputFilePath.replace(workDir,workDir+"/"+settings.pdfDirectory);
+    }
+    const dirPath = path.dirname(outputFilePath);
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
+    }
+
     const command = `${AMATL_BINARY} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --pdf-exec-path ${CHROMIUM_PATH}`;
     console.log(command);
     exec(command, { timeout: 6000 }, (error, stdout, stderr) => {

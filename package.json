@@ -2,7 +2,7 @@
   "name": "amatl-vscode",
   "displayName": "amatl-vscode",
   "description": "Convert your Markdown files into HTML and PDF with Amatl !",
-  "version": "0.15.9",
+  "version": "0.15.10",
   "publisher": "ArnaudFornerot",
   "icon": "template/logo.png",
   "engines": {
@@ -25,10 +25,20 @@
           "default": false,
           "description": "Enable HTML generation when saving a Markdown file."
         },
+        "amatl.htmlDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Generate PDF in. If empty in the same place off MD"
+        },
         "amatl.generatePdfOnSave": {
           "type": "boolean",
           "default": true,
           "description": "Enable PDF generation when saving a Markdown file."
+        },
+        "amatl.pdfDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Generate PDF in. If empty in the same place off MD"
         },
         "amatl.configDirectory": {
           "type": "string",

@@ -4,6 +4,11 @@ All notable changes to the "amatl-vscode" extension will be documented in this f
 
 ## 0.15.10
 
+- Add htmlDirectory
+- Add pdfDirectory
+
+## 0.15.10
+
 - Add Resresh Directives
 
 ## 0.15.9

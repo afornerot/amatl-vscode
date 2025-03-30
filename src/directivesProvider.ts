@@ -14,10 +14,10 @@ export class DirectivesProvider implements vscode.TreeDataProvider<DirectiveItem
     private _onDidChangeTreeData: vscode.EventEmitter<DirectiveItem | undefined | void> = new vscode.EventEmitter<DirectiveItem | undefined | void>();
     readonly onDidChangeTreeData: vscode.Event<DirectiveItem | undefined | void> = this._onDidChangeTreeData.event;
 
-    private configSettings: { generateHtmlOnSave: boolean, generatePdfOnSave: boolean, configDirectory: string };
+    private configSettings: { generateHtmlOnSave: boolean, htmlDirectory: string, generatePdfOnSave: boolean, pdfDirectory: string, configDirectory: string };
     private directives: Directive[] = [];
 
-    constructor(configSettings: { generateHtmlOnSave: boolean, generatePdfOnSave: boolean, configDirectory: string }) {
+    constructor(configSettings: { generateHtmlOnSave: boolean, htmlDirectory: string, generatePdfOnSave: boolean, pdfDirectory: string, configDirectory: string }) {
         this.configSettings = configSettings;
         this.directives = this.loadDirectives();
 

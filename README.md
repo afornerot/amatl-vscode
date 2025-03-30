@@ -54,8 +54,14 @@ See [`doc`](https://github.com/Bornholm/amatl/tree/master/doc/README.md) for mor
 ### 📝 amatl.generateHtmlOnSave
 Enable HTML generation when saving a Markdown file.
 
+### 📂 amatl.htmlDirectory
+Target path to the generate html. If empty, in the same place of the md.
+
 ### 📄 amatl.generatePdfOnSave
 Enable PDF generation when saving a Markdown file.
+
+### 📂 amatl.pdfDirectory
+Target path to the generate pdf. If empty, in the same place of the md.
 
 ### 📂 amatl.configDirectory
 Path to an Amatl configuration directory. If empty, the default configuration is used.
