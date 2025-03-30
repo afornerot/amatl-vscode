@@ -3,6 +3,10 @@
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
 
+## 0.15.5
+
+- Modify sidebar logo
+
 ## 0.15.3
 
 - Add Amatl-Directives sidebar
