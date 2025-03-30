@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./template/logo.svg" style="height:150px" />
+  <img src="./template/logo.png" style="height:100px" />
 </p>
 
 # Amatl VS Code Extension  
