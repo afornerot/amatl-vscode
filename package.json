@@ -35,7 +35,14 @@
           "default": "",
           "description": "Path to an Amatl configuration directory. If empty, the default configuration is used."
         }
-      }
+      },
+      "commands": [
+        {
+          "command": "amatl.reloadDirectives",
+          "title": "Reload Directives",
+          "category": "Amatl"
+        }
+      ]
     },  
     "viewsContainers": {
       "activitybar": [

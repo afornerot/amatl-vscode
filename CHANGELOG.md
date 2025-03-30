@@ -2,6 +2,10 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
+## 0.15.10
+
+- Add Resresh Directives
+
 ## 0.15.9
 
 - Add Custom Directives
