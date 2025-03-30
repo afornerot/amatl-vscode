@@ -1,0 +1,28 @@
+[
+    {
+      "name": "Table of Contents",
+      "code": ":toc{minLevel=\"<minLevel>\", maxLevel=\"<maxLevel>\"}",
+      "description": "Generate a table of contents for the document. You can specify min/max heading levels."
+    },
+    {
+      "name": "Include File",
+      "code": ":include{url=\"<url>\", fromHeadings=\"<headingLevel>\", shiftHeadings=\"<levelShift>\"}",
+      "description": "Include another file into the document."
+    },
+    {
+      "name": "Code Block",
+      "code": "```\n\n```",
+      "description": "Insert a formatted code block with syntax highlighting."
+    },
+    {
+      "name": "Image",
+      "code": "![Alt text](<imagePath>)",
+      "description": "Insert an image with an optional description."
+    },
+    {
+      "name": "Table",
+      "code": "| Header 1 | Header 2 |\n|----------|----------|\n| Data 1   | Data 2   |",
+      "description": "Insert a basic Markdown table."
+    }
+  ]
+  

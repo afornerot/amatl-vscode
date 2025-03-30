@@ -2,10 +2,8 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import axios from 'axios';
 import { exec } from 'child_process';
-import { execFile } from "child_process";
-import { spawn } from "child_process";
+import { DirectivesProvider } from "./directivesProvider";
 
 // 📌 Détecte l'OS et sélectionne le bon binaire
 const platform = os.platform();
@@ -120,8 +118,6 @@ function renderAmatl(filePath: string , type: string) {
     let outputFilePath=filePath.replace('.md', '.'+type);
     let configFile=getConfigFile(settings.configDirectory);
     
-
-    //vscode.window.showInformationMessage("🔄 Début génération "+outputFilePath+" ...");
     const command = `${AMATL_BINARY} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --pdf-exec-path ${CHROMIUM_PATH}`;
     console.log(command);
     exec(command, { timeout: 6000 }, (error, stdout, stderr) => {
@@ -136,6 +132,7 @@ function renderAmatl(filePath: string , type: string) {
     });    
 }
 
+// A
 // Fonction principale
 export function activate(context: vscode.ExtensionContext) {
     console.log("✅ [Amatl] Début de l'activation de l'extension.");
@@ -156,11 +153,11 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage(`✅ Chromium trouvé : ${stdout.trim()}`);
         }
     });
+
     
     vscode.window.showInformationMessage("✅ Amatl prêt à l'utilisation !");
 
-
-    // Récupérer les paramètres de configuration
+    // Action sur sauvegarde d'un fichier
     let disposable = vscode.workspace.onDidSaveTextDocument((document) => {
         if (document.languageId === "markdown") {
             const filePath = document.fileName;
@@ -169,8 +166,24 @@ export function activate(context: vscode.ExtensionContext) {
             renderAmatl(filePath,"pdf");
         }
     });
-
     context.subscriptions.push(disposable);
+
+    // Création d'un menu amatl-helper
+    const directivesProvider = new DirectivesProvider();
+    vscode.window.registerTreeDataProvider("amatlDirectives", directivesProvider);
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand("extension.insertDirective", (directive) => {
+            console.log("here");
+            const editor = vscode.window.activeTextEditor;
+            console.log(directive);
+            if (editor) {
+                editor.edit((editBuilder) => {
+                    editBuilder.insert(editor.selection.active, directive);
+                });
+            }
+        })
+    );
 }
 
 export function deactivate() {}
