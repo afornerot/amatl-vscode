@@ -2,7 +2,7 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
-## 0.15.7
+## 0.15.8
 
 - Add Custom Directives
 - Replace pattern in directives
