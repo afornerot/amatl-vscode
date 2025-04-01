@@ -2,6 +2,12 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
+## 0.16.2
+
+- No info when extension is activate
+- Add command for generateHtml and generatePdf
+- Add debugMode setting
+
 ## 0.16.1
 
 - Upgrade amatl for v0.16.0 = https://github.com/Bornholm/amatl/releases/tag/v0.16.0

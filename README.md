@@ -127,6 +127,11 @@ You can add directive to Amatl sidebar
   ]
 ```
 
+## ⚙️ Commands
+
+- **amatl.reloadDirectives** = Reload directive
+- **amatl.generateHtml** = Generate the html of the current md
+- **amatl.generatePdf** = Generate the pdf of the current md
 
 ## 📜 License  
 [MIT](./LICENSE)
