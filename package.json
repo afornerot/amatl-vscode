@@ -44,6 +44,11 @@
           "type": "string",
           "default": "",
           "description": "Path to an Amatl configuration directory. If empty, the default configuration is used."
+        },
+        "amatl.debugMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Activate debugMode"
         }
       },
       "commands": [

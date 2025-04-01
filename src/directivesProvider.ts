@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
+import { getConfigSettings } from './configSettings';
 
 interface Directive {
     name: string;
@@ -14,11 +15,11 @@ export class DirectivesProvider implements vscode.TreeDataProvider<DirectiveItem
     private _onDidChangeTreeData: vscode.EventEmitter<DirectiveItem | undefined | void> = new vscode.EventEmitter<DirectiveItem | undefined | void>();
     readonly onDidChangeTreeData: vscode.Event<DirectiveItem | undefined | void> = this._onDidChangeTreeData.event;
 
-    private configSettings: { generateHtmlOnSave: boolean, htmlDirectory: string, generatePdfOnSave: boolean, pdfDirectory: string, configDirectory: string };
+    private configSettings;
     private directives: Directive[] = [];
 
-    constructor(configSettings: { generateHtmlOnSave: boolean, htmlDirectory: string, generatePdfOnSave: boolean, pdfDirectory: string, configDirectory: string }) {
-        this.configSettings = configSettings;
+    constructor() {
+        this.configSettings = getConfigSettings();
         this.directives = this.loadDirectives();
 
         // Enregistrement de la commande de rafraîchissement

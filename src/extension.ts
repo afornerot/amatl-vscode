@@ -5,6 +5,7 @@ import * as os from 'os';
 import { exec } from 'child_process';
 import { DirectivesProvider } from "./directivesProvider";
 import { FileCompletionProvider } from "./filePathCompletionProvider";
+import { getConfigSettings } from './configSettings';
 
 // 📌 Détecte l'OS et sélectionne le bon binaire
 const platform = os.platform();
@@ -20,18 +21,6 @@ if (platform === "win32") {
 }
 
 process.env["PUPPETEER_EXECUTABLE_PATH"] = "/snap/bin/chromium";
-
-// Récupérer les settings de l'extension
-function getConfigSettings(): { generateHtmlOnSave: boolean, htmlDirectory: string, generatePdfOnSave: boolean, pdfDirectory: string, configDirectory: string } {
-    const config = vscode.workspace.getConfiguration('amatl');
-    return {
-        generateHtmlOnSave: config.get<boolean>('generateHtmlOnSave', true),
-        htmlDirectory: config.get<string>('htmlDirectory', ''),
-        generatePdfOnSave: config.get<boolean>('generatePdfOnSave', false),
-        pdfDirectory: config.get<string>('pdfDirectory', ''),
-        configDirectory: config.get<string>('configDirectory', '')
-    };
-}
 
 // Fonction pour obtenir le chemin du fichier de configuration
 function getConfigFile(configDirectory: string): string {
@@ -116,6 +105,7 @@ function renderAmatl(filePath: string , type: string) {
         }
     }
 
+    // Placer les html/pdf dans un emplacement spécifique
     let outputFilePath=filePath.replace('.md', '.'+type);
     let configFile=getConfigFile(settings.configDirectory);
 
@@ -130,7 +120,15 @@ function renderAmatl(filePath: string , type: string) {
         fs.mkdirSync(dirPath, { recursive: true });
     }
 
-    const command = `${AMATL_BINARY} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --pdf-exec-path ${CHROMIUM_PATH}`;
+    // Construction de la commande amatl
+    let command = `${AMATL_BINARY} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --pdf-exec-path ${CHROMIUM_PATH}`;
+
+    // Ajout du mode debug
+    if(settings.debugMode) {
+        command+=" --debug";
+    }
+
+    // Execution de la commande
     console.log(command);
     exec(command, { timeout: 6000 }, (error, stdout, stderr) => {
         if (error) {
@@ -181,7 +179,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable);
 
     // Création d'un menu amatl-helper
-    const directivesProvider = new DirectivesProvider(getConfigSettings());
+    const directivesProvider = new DirectivesProvider();
     vscode.window.registerTreeDataProvider("amatlDirectives", directivesProvider);
 
     // Commande insertion de directives    

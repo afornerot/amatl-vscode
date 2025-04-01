@@ -2,6 +2,10 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
+## 0.16.1
+
+- Upgrade amatl for v0.16.0 = https://github.com/Bornholm/amatl/releases/tag/v0.16.0
+
 ## 0.15.12
 
 - Add autocompletion route file where you type ./ or ../
