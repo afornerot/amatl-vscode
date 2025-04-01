@@ -41,7 +41,7 @@ export class FileCompletionProvider implements vscode.CompletionItemProvider {
             // Ajoute "/" si c'est un dossier pour continuer la complétion
             completionItem.insertText = entry + (isDirectory ? "/" : "");
             if (isDirectory) {
-                completionItem.command = { title: "refreshCompletion", command: "extension.refreshCompletion", arguments: [currentPath + entry + "/"] };
+                completionItem.command = { title: "refreshCompletion", command: "amatl.refreshCompletion", arguments: [currentPath + entry + "/"] };
             }
 
             return completionItem;

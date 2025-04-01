@@ -147,8 +147,6 @@ function renderAmatl(filePath: string , type: string) {
 export function activate(context: vscode.ExtensionContext) {
     console.log("✅ [Amatl] Début de l'activation de l'extension.");
 
-    vscode.window.showInformationMessage("🔄 Vérification et installation d'Amatl...");
-
     // ✅ Vérifier si le binaire amatl existe
     if (!require('fs').existsSync(AMATL_BINARY)) {
         vscode.window.showErrorMessage("❌ Erreur : Binaire Amatl introuvable !");
@@ -160,13 +158,9 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showErrorMessage("❌ Chromium non trouvé ! Vérifiez son installation.");
         } else {
             CHROMIUM_PATH=stdout.trim();
-            vscode.window.showInformationMessage(`✅ Chromium trouvé : ${stdout.trim()}`);
         }
     });
-
     
-    vscode.window.showInformationMessage("✅ Amatl prêt à l'utilisation !");
-
     // Action sur sauvegarde d'un fichier
     let disposable = vscode.workspace.onDidSaveTextDocument((document) => {
         if (document.languageId === "markdown") {
@@ -182,9 +176,9 @@ export function activate(context: vscode.ExtensionContext) {
     const directivesProvider = new DirectivesProvider();
     vscode.window.registerTreeDataProvider("amatlDirectives", directivesProvider);
 
-    // Commande insertion de directives    
+    // Insertion de directives    
     context.subscriptions.push(
-        vscode.commands.registerCommand("extension.insertDirective", (directive,replacePattern) => {
+        vscode.commands.registerCommand("amatl.insertDirective", (directive,replacePattern) => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
 
@@ -224,7 +218,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Commande pour rafraîchir la complétion après sélection d'un dossier
     context.subscriptions.push(
-        vscode.commands.registerCommand("extension.refreshCompletion", async (newPath: string) => {
+        vscode.commands.registerCommand("amatl.refreshCompletion", async (newPath: string) => {
             const editor = vscode.window.activeTextEditor;
             if (!editor) {
                 return;
@@ -233,6 +227,39 @@ export function activate(context: vscode.ExtensionContext) {
             await vscode.commands.executeCommand("editor.action.triggerSuggest");
         })
     );    
+
+    // Commande pour générer le HTML
+    let generateHtml = vscode.commands.registerCommand('amatl.generateHtml', () => {
+        let editor = vscode.window.activeTextEditor;
+        if (editor) {
+            const document = editor.document;
+
+            // Vérifier si c'est un fichier Markdown
+            if (document.languageId === "markdown") {
+                const filePath = document.fileName;
+                renderAmatl(filePath, "html");
+            }
+        }
+    });
+
+    // Commande pour générer le PDF
+    let generatePdf = vscode.commands.registerCommand('amatl.generatePdf', () => {
+        let editor = vscode.window.activeTextEditor;
+        if (editor) {
+            const document = editor.document;
+
+            // Vérifier si c'est un fichier Markdown
+            if (document.languageId === "markdown") {
+                const filePath = document.fileName;
+                renderAmatl(filePath, "pdf");
+            }
+        }
+    });
+
+    context.subscriptions.push(generateHtml);
+    context.subscriptions.push(generatePdf);   
+
+    console.log("✅ End activate");
 }
 
 export function deactivate() {}

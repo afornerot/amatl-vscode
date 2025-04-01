@@ -90,7 +90,7 @@ class DirectiveItem extends vscode.TreeItem {
             this.iconPath = new vscode.ThemeIcon("refresh"); // Icône VS Code standard
         } else {
             this.command = {
-                command: "extension.insertDirective",
+                command: "amatl.insertDirective",
                 title: "Insert Directive",
                 arguments: [code, replacePattern]
             };

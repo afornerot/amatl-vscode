@@ -12,7 +12,9 @@
     "Formatters"
   ],
   "activationEvents": [
-    "onStartupFinished"
+    "onStartupFinished",
+    "onCommand:amatl.generateHtml",
+    "onCommand:amatl.generatePdf"    
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -50,15 +52,25 @@
           "default": false,
           "description": "Activate debugMode"
         }
+      }
+    }, 
+    "commands": [
+      {
+        "command": "amatl.reloadDirectives",
+        "title": "Amatl: Reload Directives",
+        "category": "Amatl"
       },
-      "commands": [
-        {
-          "command": "amatl.reloadDirectives",
-          "title": "Reload Directives",
+      {
+        "command": "amatl.generateHtml",
+        "title": "Amatl: Générer HTML",
+        "category": "Amatl"
+      },
+      {
+          "command": "amatl.generatePdf",
+          "title": "Amatl: Générer PDF",
           "category": "Amatl"
-        }
-      ]
-    },  
+      }        
+    ],
     "viewsContainers": {
       "activitybar": [
         {
