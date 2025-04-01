@@ -12,9 +12,7 @@
     "Formatters"
   ],
   "activationEvents": [
-    "onStartupFinished",
-    "onCommand:amatl.generateHtml",
-    "onCommand:amatl.generatePdf"    
+    "onStartupFinished" 
   ],
   "main": "./dist/extension.js",
   "contributes": {
