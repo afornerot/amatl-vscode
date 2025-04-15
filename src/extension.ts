@@ -120,13 +120,14 @@ function renderAmatl(filePath: string , type: string) {
         fs.mkdirSync(dirPath, { recursive: true });
     }
 
-    // Construction de la commande amatl
-    let command = `${AMATL_BINARY} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --pdf-exec-path ${CHROMIUM_PATH}`;
-
     // Ajout du mode debug
+    let debug="";
     if(settings.debugMode) {
-        command+=" --debug";
+        debug=" --debug --log-level debug";
     }
+
+    // Construction de la commande amatl
+    let command = `${AMATL_BINARY} ${debug} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --pdf-exec-path ${CHROMIUM_PATH}`;
 
     // Execution de la commande
     console.log(command);

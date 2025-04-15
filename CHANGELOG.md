@@ -2,6 +2,11 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
+## 0.19.0
+
+- upgrade amatl to 0.19.0
+- add amatl.exe for windows
+
 ## 0.16.2
 
 - No info when extension is activate
