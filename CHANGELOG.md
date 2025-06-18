@@ -2,6 +2,12 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
+## 0.21.1
+
+- upgrade amatl to 0.21.1
+- add amatl for macos
+- no more CHROMIUM_PATH
+
 ## 0.19.0
 
 - upgrade amatl to 0.19.0

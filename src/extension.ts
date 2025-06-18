@@ -10,7 +10,6 @@ import { getConfigSettings } from './configSettings';
 // 📌 Détecte l'OS et sélectionne le bon binaire
 const platform = os.platform();
 let AMATL_BINARY = "";
-let CHROMIUM_PATH = "";
 
 if (platform === "win32") {
     AMATL_BINARY = path.join(__dirname, "..", "bin", "amatl", "win", "amatl.exe");
@@ -127,7 +126,7 @@ function renderAmatl(filePath: string , type: string) {
     }
 
     // Construction de la commande amatl
-    let command = `${AMATL_BINARY} ${debug} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}" --pdf-exec-path ${CHROMIUM_PATH}`;
+    let command = `${AMATL_BINARY} ${debug} render --config "${configFile}" ${type} -o "${outputFilePath}" "${filePath}"`;
 
     // Execution de la commande
     console.log(command);
@@ -152,16 +151,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (!require('fs').existsSync(AMATL_BINARY)) {
         vscode.window.showErrorMessage("❌ Erreur : Binaire Amatl introuvable !");
     }
-
-    // ✅ Vérifier que chromium est installé
-    exec("which chromium", (error, stdout, stderr) => {
-        if (error) {
-            vscode.window.showErrorMessage("❌ Chromium non trouvé ! Vérifiez son installation.");
-        } else {
-            CHROMIUM_PATH=stdout.trim();
-        }
-    });
-    
+   
     // Action sur sauvegarde d'un fichier
     let disposable = vscode.workspace.onDidSaveTextDocument((document) => {
         if (document.languageId === "markdown") {
