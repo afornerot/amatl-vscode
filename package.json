@@ -2,7 +2,7 @@
   "name": "amatl-vscode",
   "displayName": "amatl-vscode",
   "description": "Convert your Markdown files into HTML and PDF with Amatl !",
-  "version": "0.22.0",
+  "version": "0.22.1",
   "publisher": "ArnaudFornerot",
   "icon": "template/logo.png",
   "engines": {
