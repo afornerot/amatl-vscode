@@ -2,3 +2,11 @@ html-layout: ./template.gohtml
 pdf-scale: 0.7
 pdf-margin-left: 1.0
 pdf-margin-right: 1.0
+pdf-margin-top: 0.0
+pdf-margin-bottom: 0.0
+pdf-background: true
+pdf-display-header-footer: true
+pdf-footer-template: |-
+  <div style="font-size:10px;width:100%;padding-left:1cm;padding-right:1cm">
+    <span style="float:right"><span class="pageNumber"></span> / <span class="totalPages"></span></span>
+  </div>
