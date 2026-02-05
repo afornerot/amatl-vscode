@@ -2,6 +2,10 @@
 
 All notable changes to the "amatl-vscode" extension will be documented in this file.
 
+## 0.29.2
+
+- upgrade amatl to 0.29.2
+
 ## 0.29.1
 
 - upgrade amatl to 0.29.1
