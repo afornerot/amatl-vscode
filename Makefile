@@ -1,4 +1,4 @@
-AMATL_VERSION := 0.28.1
+AMATL_VERSION := 0.29.1
 
 amatl:
 	mkdir -p tmp
