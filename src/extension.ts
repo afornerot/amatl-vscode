@@ -29,7 +29,7 @@ function getConfigFile(configDirectory: string): string {
     configFile = path.join(__dirname, '..', 'template', 'config.yml');
 
     // Si configDirectory est vide, on utilise le fichier par défaut
-    
+
     if (configDirectory) {
         // Utilisation de workspaceFolders pour obtenir le répertoire de travail
         const workDir = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
@@ -51,11 +51,11 @@ function getNoReplace(configDirectory: string): string | null {
     // Définition du fichier de configuration par défaut
     noReplaceFile = path.join(__dirname, '..', 'template', 'noreplace.txt');
     if (!fs.existsSync(noReplaceFile)) {
-        noReplaceFile=null;
+        noReplaceFile = null;
     }
 
     // Si configDirectory est vide, on utilise le fichier par défaut
-    
+
     if (configDirectory) {
         // Utilisation de workspaceFolders pour obtenir le répertoire de travail
         const workDir = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
@@ -87,32 +87,32 @@ function isFileInNoreplaceList(basePath: string, noreplaceFile: string): boolean
 }
 
 // Export amatl
-function renderAmatl(filePath: string , type: string) {
+function renderAmatl(filePath: string, type: string) {
     // Générer html et pdf en fonction du paramétrage
     let settings = getConfigSettings();
-    if((type==="html"&&!settings.generateHtmlOnSave)||(type==="pdf"&&!settings.generatePdfOnSave)) {
+    if ((type === "html" && !settings.generateHtmlOnSave) || (type === "pdf" && !settings.generatePdfOnSave)) {
         return;
     }
 
     // Ne pas traiter les fichiers présent dans noReplaceFile
     let noReplaceFile = getNoReplace(settings.configDirectory);
     let workDir = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
-    if(noReplaceFile) {
-        let basePath=filePath.replace(workDir+"/","");
-        if(isFileInNoreplaceList(basePath,noReplaceFile)) {
+    if (noReplaceFile) {
+        let basePath = filePath.replace(workDir + "/", "");
+        if (isFileInNoreplaceList(basePath, noReplaceFile)) {
             return;
         }
     }
 
     // Placer les html/pdf dans un emplacement spécifique
-    let outputFilePath=filePath.replace('.md', '.'+type);
-    let configFile=getConfigFile(settings.configDirectory);
+    let outputFilePath = filePath.replace('.md', '.' + type);
+    let configFile = getConfigFile(settings.configDirectory);
 
-    if(type==="html"&&settings.htmlDirectory) {
-        outputFilePath=outputFilePath.replace(workDir,workDir+"/"+settings.htmlDirectory);
+    if (type === "html" && settings.htmlDirectory) {
+        outputFilePath = outputFilePath.replace(workDir, workDir + "/" + settings.htmlDirectory);
     }
-    if(type==="pdf"&&settings.pdfDirectory) {
-        outputFilePath=outputFilePath.replace(workDir,workDir+"/"+settings.pdfDirectory);
+    if (type === "pdf" && settings.pdfDirectory) {
+        outputFilePath = outputFilePath.replace(workDir, workDir + "/" + settings.pdfDirectory);
     }
     const dirPath = path.dirname(outputFilePath);
     if (!fs.existsSync(dirPath)) {
@@ -120,9 +120,9 @@ function renderAmatl(filePath: string , type: string) {
     }
 
     // Ajout du mode debug
-    let debug="";
-    if(settings.debugMode) {
-        debug=" --debug --log-level debug";
+    let debug = "";
+    if (settings.debugMode) {
+        debug = " --debug --log-level debug";
     }
 
     // Construction de la commande amatl
@@ -130,7 +130,7 @@ function renderAmatl(filePath: string , type: string) {
 
     // Execution de la commande
     console.log(command);
-    exec(command, { timeout: 6000 }, (error, stdout, stderr) => {
+    exec(command, { timeout: 1200000 }, (error, stdout, stderr) => {
         if (error) {
             vscode.window.showErrorMessage(`❌ Erreur Amatl ${type}: ${error}`);
             console.log(`stderr = ${stderr}`);
@@ -139,7 +139,7 @@ function renderAmatl(filePath: string , type: string) {
         }
 
         vscode.window.showInformationMessage(`✅ ${type} généré avec succès : ${outputFilePath}`);
-    });    
+    });
 }
 
 // A
@@ -151,14 +151,14 @@ export function activate(context: vscode.ExtensionContext) {
     if (!require('fs').existsSync(AMATL_BINARY)) {
         vscode.window.showErrorMessage("❌ Erreur : Binaire Amatl introuvable !");
     }
-   
+
     // Action sur sauvegarde d'un fichier
     let disposable = vscode.workspace.onDidSaveTextDocument((document) => {
         if (document.languageId === "markdown") {
             const filePath = document.fileName;
 
-            renderAmatl(filePath,"html");
-            renderAmatl(filePath,"pdf");
+            renderAmatl(filePath, "html");
+            renderAmatl(filePath, "pdf");
         }
     });
     context.subscriptions.push(disposable);
@@ -169,15 +169,15 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Insertion de directives    
     context.subscriptions.push(
-        vscode.commands.registerCommand("amatl.insertDirective", (directive,replacePattern) => {
+        vscode.commands.registerCommand("amatl.insertDirective", (directive, replacePattern) => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
 
                 const selection = editor.selection;
                 const selectedText = editor.document.getText(selection);
-            
+
                 let finalSyntax = directive;
-            
+
                 // Remplace un placeholder replacePattern si présent dans la directive
                 if (selectedText && replacePattern) {
                     finalSyntax = directive.replace(replacePattern, selectedText);
@@ -217,7 +217,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             await vscode.commands.executeCommand("editor.action.triggerSuggest");
         })
-    );    
+    );
 
     // Commande pour générer le HTML
     let generateHtml = vscode.commands.registerCommand('amatl.generateHtml', () => {
@@ -248,9 +248,9 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(generateHtml);
-    context.subscriptions.push(generatePdf);   
+    context.subscriptions.push(generatePdf);
 
     console.log("✅ End activate");
 }
 
-export function deactivate() {}
+export function deactivate() { }
